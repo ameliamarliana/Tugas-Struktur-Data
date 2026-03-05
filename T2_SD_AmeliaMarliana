@@ -1,0 +1,72 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+/*  -----Tugas 2 Struktur Data-----
+      Nama : Amelia Marliana
+      Kelas: 2A 
+      NPM  : 2510631170025
+*/
+
+int main() {
+    
+    int ukuran;
+
+    cout << "Masukkan ordo matriks: ";
+    cin >> ukuran;
+
+    int A[ukuran][ukuran];
+
+    // Input matriks
+    cout << "\nInput elemen matriks:" << endl;
+    for (int baris = 0; baris < ukuran; baris++) {
+        for (int kolom = 0; kolom < ukuran; kolom++) {
+            cout << "Elemen [" << baris << "," << kolom << "] : ";
+            cin >> A[baris][kolom];
+        }
+    }
+
+    // Tampilan matriks awal
+    cout << "\nMatriks sebelum rotasi:\n";
+    for (int baris = 0; baris < ukuran; baris++) {
+        for (int kolom = 0; kolom < ukuran; kolom++) {
+            cout << setw(4) << A[baris][kolom];
+        }
+        cout << endl;
+    }
+
+    // Transpose matriks
+    for (int baris = 0; baris < ukuran; baris++) {
+        for (int kolom = baris + 1; kolom < ukuran; kolom++) {
+            int tukar = A[baris][kolom];
+            A[baris][kolom] = A[kolom][baris];
+            A[kolom][baris] = tukar;
+        }
+    }
+
+    // Tukar kiri kanan tiap baris(reverse)
+    for (int baris = 0; baris < ukuran; baris++) {
+        int kiri = 0;
+        int kanan = ukuran - 1;
+
+        while (kiri < kanan) {
+            int tukar = A[baris][kiri];
+            A[baris][kiri] = A[baris][kanan];
+            A[baris][kanan] = tukar;
+
+            kiri++;
+            kanan--;
+        }
+    }
+
+    // Hasil rotasi
+    cout << "\nHasil matriks setelah rotasi 90 derajat searah jarum jam:\n";
+    for (int baris = 0; baris < ukuran; baris++) {
+        for (int kolom = 0; kolom < ukuran; kolom++) {
+            cout << setw(4) << A[baris][kolom];
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
