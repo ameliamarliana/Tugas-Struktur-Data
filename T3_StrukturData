@@ -1,0 +1,158 @@
+#include <iostream>
+using namespace std;
+
+// struct buat nyimpen nilai
+struct Nilai{
+    float absen, tugas, uts, uas;
+    float akhir;
+    char huruf;
+};
+
+// struct mahasiswa (di dalamnya ada struct nilai)
+struct Mahasiswa{
+    string npm;
+    string nama;
+    Nilai n;
+};
+
+Mahasiswa m[20]; // array maksimal 20 mahasiswa
+int jml = 0;     // buat ngitung jumlah data
+
+// fungsi buat hitung nilai akhir + huruf
+void hitung(int i){
+    m[i].n.akhir = 0.1*m[i].n.absen + 0.2*m[i].n.tugas + 0.3*m[i].n.uts + 0.4*m[i].n.uas;
+
+    if(m[i].n.akhir > 80)
+        m[i].n.huruf = 'A';
+    else if(m[i].n.akhir > 70)
+        m[i].n.huruf = 'B';
+    else if(m[i].n.akhir > 60)
+        m[i].n.huruf = 'C';
+    else
+        m[i].n.huruf = 'D';
+}
+
+int main(){
+    int pilih;
+    string cari;
+
+    // menu akan terus muncul sampai pilih keluar
+    do{
+        cout << "\n===============================" << endl;
+        cout << "===== MENU DATA MAHASISWA =====" << endl;
+        cout << "===============================" << endl;
+        cout << "1. Input Data\n";
+        cout << "2. Tampil Data\n";
+        cout << "3. Edit Data\n";
+        cout << "4. Hapus Data\n";
+        cout << "5. Keluar\n";
+        cout << "Pilih menu: ";
+        cin >> pilih;
+        cout << "===============================" << endl;
+
+        // INPUT DATA
+        if(pilih == 1){
+
+            // cek kalau data sudah penuh
+            if(jml >= 20){
+                cout << "Data sudah penuh (maks 20)\n";
+            }
+            else{
+                cout << "NPM         : ";
+                cin >> m[jml].npm;
+
+                cout << "Nama        : ";
+                cin >> m[jml].nama;
+
+                cout << "Nilai Absen : ";
+                cin >> m[jml].n.absen;
+
+                cout << "Nilai Tugas : ";
+                cin >> m[jml].n.tugas;
+
+                cout << "Nilai UTS   : ";
+                cin >> m[jml].n.uts;
+
+                cout << "Nilai UAS   : ";
+                cin >> m[jml].n.uas;
+
+                // hitung nilai setelah input
+                hitung(jml);
+
+                jml++; // jumlah data bertambah
+            }
+        }
+
+        // TAMPIL DATA
+        else if(pilih == 2){
+
+            if(jml == 0){
+                cout << "Belum ada data\n";
+            }
+            else{
+                cout << "\n======== TAMPILAN DATA ========\n";
+
+                for(int i=0;i<jml;i++){
+                    cout << "\nData ke-" << i+1 << endl;
+                    cout << "NPM         : " << m[i].npm << endl;
+                    cout << "Nama        : " << m[i].nama << endl;
+                    cout << "Nilai Akhir : " << m[i].n.akhir << endl;
+                    cout << "Nilai Huruf : " << m[i].n.huruf << endl;
+                }
+            }
+        }
+
+        // EDIT DATA BERDASARKAN NPM
+        else if(pilih == 3){
+            cout << "Masukkan NPM yang dicari: ";
+            cin >> cari;
+
+            for(int i=0;i<jml;i++){
+                if(m[i].npm == cari){
+
+                    cout << "Nama baru   : ";
+                    cin >> m[i].nama;
+
+                    cout << "Nilai Absen : ";
+                    cin >> m[i].n.absen;
+
+                    cout << "Nilai Tugas : ";
+                    cin >> m[i].n.tugas;
+
+                    cout << "Nilai UTS   : ";
+                    cin >> m[i].n.uts;
+
+                    cout << "Nilai UAS   : ";
+                    cin >> m[i].n.uas;
+
+                    // hitung ulang
+                    hitung(i);
+
+                    cout << "Data berhasil diubah\n";
+                }
+            }
+        }
+
+        // HAPUS DATA BERDASARKAN NPM
+        else if(pilih == 4){
+            cout << "Masukkan NPM yang akan dihapus: ";
+            cin >> cari;
+
+            for(int i=0;i<jml;i++){
+                if(m[i].npm == cari){
+
+                    // geser data supaya tidak kosong
+                    for(int j=i;j<jml-1;j++){
+                        m[j] = m[j+1];
+                    }
+
+                    jml--; // jumlah data berkurang
+                    cout << "Data berhasil dihapus\n";
+                }
+            }
+        }
+
+    }while(pilih != 5);
+
+    return 0;
+}
