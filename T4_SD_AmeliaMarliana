@@ -1,0 +1,73 @@
+#include <iostream>
+using namespace std;
+
+// struct untuk node
+struct Node {
+	int data;
+	Node* next;
+};
+
+// fungsi menambahkan data ke depan linked list
+void tambah(Node** head, int data) {
+	Node* nodeBaru = new Node();
+	nodeBaru->data = data;
+	nodeBaru->next = *head;
+	*head = nodeBaru;
+}
+
+// fungsi menampilkan isi linked list
+void tampil(Node* head) {
+	Node* nodeSekarang = head;
+
+	while(nodeSekarang != NULL) {
+		cout << nodeSekarang->data;
+
+		if(nodeSekarang->next != NULL) {
+			cout << " -> ";
+		}
+
+		nodeSekarang = nodeSekarang->next;
+	}
+
+	cout << endl;
+}
+
+// fungsi untuk membalik linked list
+void reverse(Node** head) {
+	Node* prev = NULL;
+	Node* current = *head;
+	Node* next = NULL;
+
+	while(current != NULL) {
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
+	}
+
+	*head = prev;
+}
+
+int main() {
+	Node* head = NULL;
+
+	tambah(&head,1);
+	tambah(&head,2);
+	tambah(&head,3);
+	tambah(&head,4);
+	tambah(&head,5);
+	
+  cout << "==============================================" << endl;
+	cout << "Program Reverse pada Linked List" << endl;
+	cout << "==============================================" << endl;
+	cout << "Data awal : ";
+	tampil(head);
+
+	reverse(&head);
+
+	cout << "Data setelah dibalik : ";
+	tampil(head);
+  cout << "==============================================" << endl;
+    
+	return 0;
+}
