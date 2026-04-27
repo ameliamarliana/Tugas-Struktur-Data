@@ -1,0 +1,42 @@
+#include <iostream>
+#include <queue>
+#include <stack>
+#define maks 20;
+using namespace std;
+
+int main() {
+	string input;
+	cout << "==== Input ====\n";
+	cout << "Input: ";
+	cin >> input;
+
+
+	queue <char> q;
+	stack <char> s;
+
+	for (char c : input) {
+		q.push(c);
+		s.push(c);
+	}
+
+	bool isPalindrome = true;
+
+	while (!q.empty()) {
+		if (q.front() != s.top()) {
+
+			isPalindrome = false;
+			break;
+		}
+		q.pop();
+		s.pop();
+	}
+	cout << "\n==== Output ====\n";
+	if (isPalindrome) {
+		cout << "queue adalah palindrom";
+	} else {
+		cout << "queue tidak palindrom";
+	}
+
+
+	return 0;
+}
